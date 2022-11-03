@@ -1,0 +1,40 @@
+{% extends 'user/include.html' %}
+{% load static %}
+{% block content %}
+{% include 'bookingapp/sidenav.html' %}
+<div class="container main" style="margin-top: 50px;">
+    <form method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Name</span>
+            <input type="text" id="nameid" name="name" class="form-control" value="" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Contact</span>
+            <input type="text" name="contact" id = "contact" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Problem</span>
+            <input type="text" name="prblm" class="form-control" id = "problem" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Medicine</span>
+            <input type="text" name="medicine" class="form-control" placeholder="Medicine" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="submit_btn">
+            <button class="btn btn-primary submit" type="submit">Submit</button>
+        </div>
+
+    </form>
+</div>
+<script type="text/javascript">
+    var firstname = "{{ appointobj.user_id.first_name }}";
+    var lastname = "{{ appointobj.user_id.last_name }}";
+    var fullname = firstname.concat(' ',lastname);
+    var contact = "{{ appointobj.user_id.contact }}";
+    var problem = "{{ appointobj.problem_description }}";
+    document.getElementById("nameid").defaultValue = fullname;
+    document.getElementById("problem").defaultValue = problem;
+    document.getElementById("contact").defaultValue = contact;
+</script>
+{% endblock content %}

@@ -1,0 +1,11 @@
+{% extends 'user/include.html' %}
+{% load static %}
+{% block content %}
+{% include 'bookingapp/sidenav.html' %}
+<div class="main">
+        <img src="https://hatiintl.com/wp-content/uploads/2017/01/The-Must-Have-modules-of-a-Hospital-Management-System-1200x675.jpg" height="580px" width="173%" alt="">
+        <div class="centered">
+            <a href="{% url 'appointments' %}"><button type="button" style="padding: 15px;"  class="btn btn-primary">Start Booking</button></a>
+        </div>
+</div>
+{% endblock content %}

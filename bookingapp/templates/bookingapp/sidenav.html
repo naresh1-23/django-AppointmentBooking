@@ -1,0 +1,18 @@
+<div class="sidenav bg-dark">
+    {% if user.is_authenticated %}
+    <a class="nav-link active disable">DashBoard</a>
+    {% if not user.is_superuser %}
+    <a href="{% url 'profile' %}">Profile</a>
+    {% endif %}
+    <a href="{% url 'appointed' %}">Your appointments</a>
+    {% endif %}
+    <a href="{% url 'appointments' %}">Appointments</a>
+    {% if user.is_superuser %}
+    <a href="{% url 'add-appointment' %}">Add Appointment</a>
+    {% endif %}
+    {% if user.is_doctor %}
+    <a href="{% url 'clients' %}">Clients</a>
+    {% else %}
+    <a href="{% url 'doctors' %}">Doctors</a>
+    {% endif %}
+</div>

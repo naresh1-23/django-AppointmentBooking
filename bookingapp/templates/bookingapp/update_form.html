@@ -1,0 +1,29 @@
+{% extends 'user/include.html' %}
+{% load static %}
+{% block content %}
+{% include 'bookingapp/sidenav.html' %}
+<div class="container main" style="margin-top: 50px;">
+    <form method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Start Time</span>
+            <input type="time" value = "{{ obj.start_time|time:'h:i' }}" name="start_time" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">End Time</span>
+            <input type="time" value = "{{ obj.end_time|time:'h:i' }}" name="end_time" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Date</span>
+            <input type="date" value="{{ obj.date|date:'Y-m-d' }}" name="date" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <select name="doctorId" class="form-select" aria-label="Default select example">
+            <option>{{ obj.doctor_id.username }}</option>
+          </select><br>
+        <div class="submit_btn">
+            <button class="btn btn-primary submit" type="submit">Update</button>
+        </div>
+
+    </form>
+</div>
+{% endblock content %}

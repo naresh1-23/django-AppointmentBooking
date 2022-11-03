@@ -1,0 +1,42 @@
+{% extends 'user/include.html' %}
+{% block content %}
+<div class="container" style="margin-top: 50px;">
+    
+    <form method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Username</span>
+            <input type="text" class="form-control" name="username" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+          
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">First Name</span>
+            <input type="text" class="form-control" name="first_name" placeholder="First name" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Last Name</span>
+            <input type="text" class="form-control" name="last_name" placeholder="Last name" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Email</span>
+            <input type="email" class="form-control" name="email" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Contact no.</span>
+            <input type="text" class="form-control" name="contact" placeholder="contact number" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Password</span>
+            <input type="password" class="form-control" name="password1" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Confirm Password</span>
+            <input type="password" class="form-control" name="password2" placeholder="Confirm Password" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <span class="login-form-copy">Already have an account?<a href="{% url 'login' %}"  class="login-form_sign-up">Login</a></span>
+        <div class="submit_btn">
+            <button class="btn btn-primary submit" type="submit">Register</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,14 @@
+{% extends 'user/include.html' %}
+{% load static %}
+{% block content %}
+{% include 'bookingapp/sidenav.html' %}
+<div class="main">
+    <div class="card" style="margin-top: 80px;">
+        <h4>{{ doctor.username }}</h4>
+        <h1>{{ doctor.first_name }} {{ doctor.last_name }}</h1>
+        <p class="title">{{ doctor.specialist }}</p>
+        <p>{{ doctor.study }}</p>
+        <a href="{% url 'appointments' %}"><p><button>See Appointment detail</button></p></a>
+      </div>
+</div>
+{% endblock content %}
