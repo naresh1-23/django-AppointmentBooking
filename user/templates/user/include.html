@@ -1,135 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doctor Booking System</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+    />
+
     <style>
-        .login-form-copy {
-            margin-bottom: 15px;
-            margin-top: 50px;
-        }
-        .card {
-          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-          max-width: 300px;
-          margin: auto;
-          text-align: center;
-        }
-
-        .title {
-          color: grey;
-          font-size: 18px;
-        }
-
-        button {
-          border: none;
-          outline: 0;
-          display: inline-block;
-          padding: 8px;
-          color: white;
-          background-color: #000;
-          text-align: center;
-          cursor: pointer;
-          width: 100%;
-          font-size: 18px;
-        }
-
-        a {
-          text-decoration: none;
-          font-size: 22px;
-          color: black;
-        }
-
-        button:hover, a:hover {
-          opacity: 0.7;
-        }
-        .login-form_sign-up {
-            text-decoration: none;
-            color: rgb(18, 190, 190);
-        }
-        .sidenav {
-          height: 100%;
-          width: 200px;
-          position: fixed;
-          z-index: 1;
-          top: 42px;
-          left: 0;
-          background-color: #111;
-          overflow-x: hidden;
-          padding-top: 20px;
-        }
-
-        .sidenav a {
-          padding: 6px 6px 6px 32px;
-          text-decoration: none;
-          font-size: 18px;
-          color: #818181;
-          display: block;
-        }
-
-        .sidenav a:hover {
-          color: #f1f1f1;
-        }
-
-        .main {
-          margin-left: 128px;
-          margin-top:50px;
-        }
-        .sticky {
-          position: fixed;
-          top: 0;
-          width: 100%;
-        }
-        .centered {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(20%, 300%);
-        }
-        @media screen and (max-height: 450px) {
-          .sidenav {padding-top: 15px;}
-          .sidenav a {font-size: 18px;}
-        }
+      .nav-item a {
+        color: white;
+        font-weight: bold;
+      }
+      .nav-item a:hover {
+        opacity: 0.8;
+      }
+      .sticky {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+      }
+      main.container-fluid {
+        margin-top: 80px;
+        padding-left: 220px; /* Adjust for sidenav width */
+      }
+      .sidenav {
+        height: 100%;
+        width: 200px;
+        position: fixed;
+        z-index: 1;
+        top: 42px;
+        left: 0;
+        background-color: #212529;
+        padding-top: 20px;
+      }
+      .sidenav a {
+        padding: 12px;
+        text-decoration: none;
+        font-size: 18px;
+        color: #bdbdbd;
+        display: block;
+      }
+      .sidenav a:hover {
+        background: #495057;
+        color: white;
+      }
     </style>
-</head>
-<body>
-  <ul class=" sticky nav nav-tabs navbar-dark bg-dark">
-    <li class="nav-item">
-      <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
-    </li>
-    {% if not user.is_authenticated %}
-    <li class="nav-item">
-      <a style="color: white;" class="nav-link" href="{% url 'login' %}">Login</a>
-    </li>
-    <li class="nav-item">
-      <a style="color: white;" class="nav-link" href="{% url 'register' %}">Register</a>
-    </li>
-    {% else %}
-    <li class="nav-item">
-      <a style="color: white;" class="nav-link" href="{% url 'logout' %}">Logout</a>
-    </li>
-    {% endif %}
-  </ul>
-      <main role="main" class="container" >
-        <div class="row">
-          <div class="col-md-8">
-            {% if messages %}
-            {% for message in messages %}
-            <div style="margin-left: 125px; margin-top: 45px; " class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
-              <h3>{{message}}</h3>
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            {% endfor %}
+  </head>
+  <body>
+    <nav class="sticky navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="{% url 'home' %}"
+          >🏥 Doctor Booking</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'home' %}"
+                ><i class="bi bi-house-door"></i> Home</a
+              >
+            </li>
+            {% if not user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}"
+                ><i class="bi bi-box-arrow-in-right"></i> Login</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'register' %}"
+                ><i class="bi bi-person-plus"></i> Register</a
+              >
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}"
+                ><i class="bi bi-box-arrow-left"></i> Logout</a
+              >
+            </li>
             {% endif %}
-            {% block content %}{% endblock %}
-          </div>
+          </ul>
         </div>
-      </main>
-</body>
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+      </div>
+    </nav>
+
+    <!-- Sidenav -->
+    <div class="sidenav bg-dark">
+      {% if user.is_authenticated %}
+      <a class="nav-link text-white fw-bold">Dashboard</a>
+      {% if not user.is_superuser %}
+      <a class="text-light" href="{% url 'profile' %}">Profile</a>
+      {% endif %}
+      <a class="text-light" href="{% url 'appointed' %}">Your Appointments</a>
+      {% endif %}
+      <a class="text-light" href="{% url 'appointments' %}">Appointments</a>
+      {% if user.is_superuser %}
+      <a class="text-light" href="{% url 'add-appointment' %}"
+        >Add Appointment</a
+      >
+      {% endif %} {% if user.is_doctor %}
+      <a class="text-light" href="{% url 'clients' %}">Clients</a>
+      {% else %}
+      <a class="text-light" href="{% url 'doctors' %}">Doctors</a>
+      {% endif %}
+    </div>
+
+    <!-- Main Content -->
+    <main role="main" class="container-fluid">
+      {% if messages %} {% for message in messages %}
+      <div
+        class="alert alert-{{message.tags}} alert-dismissible fade show mt-4"
+        role="alert"
+      >
+        <h4>{{ message }}</h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+        ></button>
+      </div>
+      {% endfor %} {% endif %} {% block content %}{% endblock %}
+    </main>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>

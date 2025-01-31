@@ -1,23 +1,25 @@
-{% extends 'user/include.html' %}
-{% load static %}
-{% block content %}
-{% include 'bookingapp/sidenav.html' %}
+{% extends 'user/include.html' %} {% load static %} {% include
+'bookingapp/sidenav.html' %} {% block content %}
 <div class="main">
-    <div class="container text-center">
-        <div class="row row-cols-1 row-cols-lg-2 g-2 g-lg-2">
-            {% for doctor in doctors %}
-          <div class="col">
-            <div class="p-3 border bg-light">
-                <h1>{{ doctor.username }}</h1>
-                <ul>
-                    <li>Full Name: {{ doctor.first_name }} {{ doctor.last_name }}</li>
-                    <li>Speciality: {{ doctor.specialist }}</li>
-                </ul>
-                <a href="{% url 'doctordetail' doctor.id %}"><button class="btn btn-primary">See more..</button></a>
-            </div>
-          </div>
-          {% endfor %}
+  <div class="container text-center">
+    <div class="row row-cols-1 row-cols-lg-2 g-2 g-lg-2">
+      {% for doctor in doctors %}
+      <div class="col">
+        <div class="p-3 border bg-light">
+          <h1>{{ doctor.username }}</h1>
+            <p style="font-weight: 600;">
+              Full Name: {{ doctor.first_name }} {{ doctor.last_name }}</li>
+            </p>
+            <p>
+              Speciality: {{ doctor.specialist }}
+            </p>
+          <a href="{% url 'doctordetail' doctor.id %}"
+            ><button class="btn btn-primary">See more..</button></a
+          >
         </div>
       </div>
+      {% endfor %}
+    </div>
+  </div>
 </div>
 {% endblock content %}

@@ -1,18 +1,82 @@
 <div class="sidenav bg-dark">
-    {% if user.is_authenticated %}
-    <a class="nav-link active disable">DashBoard</a>
-    {% if not user.is_superuser %}
-    <a href="{% url 'profile' %}">Profile</a>
-    {% endif %}
-    <a href="{% url 'appointed' %}">Your appointments</a>
-    {% endif %}
-    <a href="{% url 'appointments' %}">Appointments</a>
-    {% if user.is_superuser %}
-    <a href="{% url 'add-appointment' %}">Add Appointment</a>
-    {% endif %}
-    {% if user.is_doctor %}
-    <a href="{% url 'clients' %}">Clients</a>
-    {% else %}
-    <a href="{% url 'doctors' %}">Doctors</a>
-    {% endif %}
+  {% if user.is_authenticated %}
+  <a class="nav-link text-white fw-bold">Dashboard</a>
+  {% if not user.is_superuser %}
+  <a class="text-light" href="{% url 'profile' %}">Profile</a>
+  {% endif %}
+  <a class="text-light" href="{% url 'appointed' %}">Your Appointments</a>
+  {% endif %}
+  <a class="text-light" href="{% url 'appointments' %}">Appointments</a>
+  {% if user.is_superuser %}
+  <a class="text-light" href="{% url 'add-appointment' %}">Add Appointment</a>
+  {% endif %} {% if user.is_doctor %}
+  <a class="text-light" href="{% url 'clients' %}">Clients</a>
+  {% else %}
+  <a class="text-light" href="{% url 'doctors' %}">Doctors</a>
+  {% endif %}
 </div>
+
+<style>
+  body {
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+  }
+
+  .sidenav {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 42px;
+    left: 0;
+    background-color: #212529;
+    padding-top: 20px;
+    overflow-y: auto;
+  }
+
+  .sidenav a {
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #bdbdbd;
+    display: block;
+  }
+
+  .sidenav a:hover {
+    background: #495057;
+    color: white;
+  }
+
+  .container-fluid {
+    padding: 0 !important;
+  }
+
+  .row {
+    margin: 0 !important;
+  }
+
+  .col-md-8,
+  .col-lg-6 {
+    padding: 0 !important;
+  }
+
+  h1 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 2.5rem;
+  }
+
+  p {
+    margin-bottom: 10px;
+  }
+
+  img {
+    margin-top: 20px;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .btn {
+    margin-top: 10px;
+  }
+</style>

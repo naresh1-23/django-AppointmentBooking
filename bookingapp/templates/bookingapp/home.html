@@ -1,11 +1,104 @@
-{% extends 'user/include.html' %}
-{% load static %}
-{% block content %}
-{% include 'bookingapp/sidenav.html' %}
-<div class="main">
-        <img src="https://hatiintl.com/wp-content/uploads/2017/01/The-Must-Have-modules-of-a-Hospital-Management-System-1200x675.jpg" height="580px" width="173%" alt="">
-        <div class="centered">
-            <a href="{% url 'appointments' %}"><button type="button" style="padding: 15px;"  class="btn btn-primary">Start Booking</button></a>
-        </div>
+{% extends 'user/include.html' %} {% load static %} {% block content %}
+{%include 'bookingapp/sidenav.html' %}
+
+<div class="d-flex vh-100 justify-content-center align-items-center">
+  <div class="container-fluid text-center">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <h1
+          class="mt-3 text-primary fw-bold text-black"
+          style="font-family: 'Poppins', sans-serif"
+        >
+          Welcome to Our Doctor Appointment System
+        </h1>
+        <p class="lead text-secondary">
+          Book appointments with the best doctors at your convenience
+        </p>
+
+        <a
+          href="{% url 'form' %}"
+          class="btn btn-md btn-success px-4 py-2 shadow"
+        >
+          <i class="bi bi-calendar-check"></i> Start Booking
+        </a>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <img
+          src="https://hatiintl.com/wp-content/uploads/2017/01/The-Must-Have-modules-of-a-Hospital-Management-System-1200x675.jpg"
+          class="img-fluid rounded shadow-lg"
+          alt="Hospital Management System"
+        />
+      </div>
+    </div>
+  </div>
 </div>
+
+<style>
+  body {
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+  }
+
+  .sidenav {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 42px;
+    left: 0;
+    background-color: #212529;
+    padding-top: 20px;
+    overflow-y: auto;
+  }
+
+  .sidenav a {
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #bdbdbd;
+    display: block;
+  }
+
+  .sidenav a:hover {
+    background: #495057;
+    color: white;
+  }
+
+  .container-fluid {
+    padding: 0 !important;
+  }
+
+  .row {
+    margin: 0 !important;
+  }
+
+  .col-md-8,
+  .col-lg-6 {
+    padding: 0 !important;
+  }
+
+  h1 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 2.5rem;
+  }
+
+  p {
+    margin-bottom: 10px;
+  }
+
+  img {
+    margin-top: 20px;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .btn {
+    margin-top: 10px;
+  }
+</style>
+
 {% endblock content %}

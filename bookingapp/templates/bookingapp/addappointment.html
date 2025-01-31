@@ -1,7 +1,7 @@
 {% extends 'user/include.html' %}
 {% load static %}
-{% block content %}
 {% include 'bookingapp/sidenav.html' %}
+{% block content %}
 <div class="container main" style="margin-top: 50px;">
     <form method="post">
         {% csrf_token %}

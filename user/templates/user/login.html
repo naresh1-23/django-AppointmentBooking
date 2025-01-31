@@ -1,25 +1,131 @@
-{% extends 'user/include.html' %}
-{% block content %}
-<div class="container" style="margin-top: 50px;">
+{% extends 'user/include.html' %} {% block content %}
+<div class="d-flex vh-100 justify-content-center align-items-center">
+  <div class="border rounded p-4 shadow-lg bg-white" style="width: 400px">
+    <h3 class="text-center mb-4 text-primary fw-bold">Login</h3>
     <form method="post">
-        {% csrf_token %}
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">Username</span>
-            <input type="text" name="username" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-        </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">Email</span>
-            <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
-        </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">Password</span>
-            <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1">
-        </div>
-        <span class="login-form-copy">Don't have an account?<a href="{% url 'register' %}"  class="login-form_sign-up">Register</a></span>
-        <div class="submit_btn">
-            <button class="btn btn-primary submit" type="submit">Login</button>
-        </div>
-
+      {% csrf_token %}
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">
+          <i class="bi bi-person-fill"></i>
+        </span>
+        <input
+          type="text"
+          name="username"
+          class="form-control"
+          placeholder="Username"
+          aria-label="Username"
+          aria-describedby="basic-addon1"
+          required
+        />
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">
+          <i class="bi bi-envelope-fill"></i>
+        </span>
+        <input
+          type="email"
+          name="email"
+          class="form-control"
+          placeholder="Email"
+          aria-label="Email"
+          aria-describedby="basic-addon1"
+          required
+        />
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">
+          <i class="bi bi-lock-fill"></i>
+        </span>
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          placeholder="Password"
+          aria-label="Password"
+          aria-describedby="basic-addon1"
+          required
+        />
+      </div>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <span class="small"
+          >Don't have an account?
+          <a href="{% url 'register' %}" class="text-primary">Register</a>
+        </span>
+      </div>
+      <div class="d-grid">
+        <button class="btn btn-primary" type="submit">Login</button>
+      </div>
     </form>
+  </div>
 </div>
+
+<style>
+  /* Prevent page movement and scrolling */
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+    background-color: #f3f8ff;
+  }
+
+  .border {
+    border: 2px solid #e0e0e0;
+  }
+
+  .form-control {
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  .input-group-text {
+    background-color: #e9ecef;
+    border-right: none;
+  }
+
+  .input-group .form-control {
+    border-left: none;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 10px 0;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  .small a {
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .small a:hover {
+    text-decoration: underline;
+  }
+
+  h3 {
+    font-family: "Poppins", sans-serif;
+  }
+
+  .d-flex {
+    height: 100%;
+  }
+
+  .vh-100 {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Fix to perfectly center the form without any offset */
+  .border {
+    margin-top: -120px; /* Slight offset to raise the form */
+  }
+</style>
 {% endblock content %}
