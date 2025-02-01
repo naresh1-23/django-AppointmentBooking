@@ -1,7 +1,16 @@
 {% extends 'user/include.html' %} {% load static %} {% block content %}
 {%include 'bookingapp/sidenav.html' %}
-
-<div class="d-flex vh-100 justify-content-center align-items-center">
+<style>
+  body{
+    background-image: url('https://hatiintl.com/wp-content/uploads/2017/01/The-Must-Have-modules-of-a-Hospital-Management-System-1200x675.jpg'); /* Path to your background image */
+    background-size: cover; /* Ensure the image covers the entire element */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat;
+    height: 100vh; 
+    overflow: hidden;/* Prevent the image from repeating */
+  }
+</style>
+<div class="d-flex vh-100 justify-content-center align-items-center" style="margin-top: -100px;">
   <div class="container-fluid text-center">
     <div class="row justify-content-center">
       <div class="col-lg-6 col-md-8">
@@ -14,24 +23,28 @@
         <p class="lead text-secondary">
           Book appointments with the best doctors at your convenience
         </p>
-
+        {% if not user.is_doctor %}
         <a
           href="{% url 'form' %}"
           class="btn btn-md btn-success px-4 py-2 shadow"
         >
           <i class="bi bi-calendar-check"></i> Start Booking
         </a>
+        {% endif %}
       </div>
     </div>
 
-    <div class="row justify-content-center">
-      <div class="col-lg-6 col-md-8">
-        <img
+      <!-- <div class="col-lg-6 col-md-8" style="background-image: url('https://hatiintl.com/wp-content/uploads/2017/01/The-Must-Have-modules-of-a-Hospital-Management-System-1200x675.jpg'); /* Path to your background image */
+      background-size: cover; /* Ensure the image covers the entire element */
+      background-position: center; /* Center the image */
+      background-repeat: no-repeat; /* Prevent the image from repeating */
+      height: 100vh; "> -->
+        <!-- <img
           src="https://hatiintl.com/wp-content/uploads/2017/01/The-Must-Have-modules-of-a-Hospital-Management-System-1200x675.jpg"
           class="img-fluid rounded shadow-lg"
-          alt="Hospital Management System"
-        />
-      </div>
+          alt="Hospital Management System" style=""
+        /> -->
+      <!-- </div> -->
     </div>
   </div>
 </div>

@@ -14,5 +14,5 @@ urlpatterns = [
     path('appointments/update/<int:pk>', views.update_list, name='update_form'),
     path('appointments/patient-detail/<int:pk>',
          views.patient_form, name='patientform'),
-    path('patientform/<int:pk>', views.Patientform, name='form')
+    path('form/', views.book_appointment, name='form')
 ]

@@ -2,18 +2,30 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Doctor Appointment Form</title>
+    <title>Doctor Appointment System</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+    />
+
     <style>
+      /* General Styles */
       body {
         font-family: Arial, sans-serif;
         background-color: #f0f2f5;
         margin: 0;
-        padding: 0;
+        overflow-x: hidden;
       }
 
       .container {
-        width: 50%;
         max-width: 600px;
         background-color: white;
         padding: 20px;
@@ -67,38 +79,129 @@
       button:hover {
         background-color: #0056b3;
       }
+
+      /* Sidenav Styles */
+      .sidenav {
+        height: 100%;
+        width: 200px;
+        position: fixed;
+        z-index: 1;
+        top: 42px;
+        left: 0;
+        background-color: #212529;
+        padding-top: 20px;
+        overflow-y: auto;
+      }
+
+      .sidenav a {
+        padding: 12px;
+        text-decoration: none;
+        font-size: 18px;
+        color: #bdbdbd;
+        display: block;
+      }
+
+      .sidenav a:hover {
+        background: #495057;
+        color: white;
+      }
+
+      /* Main content adjustments */
+      main.container-fluid {
+        margin-top: 80px;
+        padding-left: 220px; /* Adjust for sidenav width */
+      }
+
+      .sticky {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+      }
     </style>
   </head>
   <body>
-    <div class="container">
-      <h2>Book a Doctor Appointment</h2>
-      
-      <form method="POST">
-        <!-- Patient Details -->
-        <div class="form-group">
-          <label for="full-name">Full Name:</label>
-          <input type="text" id="full-name" name="full_name" required />
+    <!-- Navbar -->
+    <nav class="sticky navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="#">🏥 Doctor Booking</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'home' %}"
+                ><i class="bi bi-house-door"></i> Home</a
+              >
+            </li>
+            {% if not user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}"
+                ><i class="bi bi-box-arrow-in-right"></i> Login</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'register' %}"
+                ><i class="bi bi-person-plus"></i> Register</a
+              >
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}"
+                ><i class="bi bi-box-arrow-left"></i> Logout</a
+              >
+            </li>
+            {% endif %}
+          </ul>
         </div>
+      </div>
+    </nav>
 
-        <div class="form-group">
-          <label for="email">Email Address:</label>
-          <input type="email" id="email" name="email" required />
-        </div>
-
-        <div class="form-group">
-          <label for="phone">Phone Number:</label>
-          <input type="text" id="phone" name="phone" required />
-        </div>
-
-        <!-- Symptoms -->
-        <div class="form-group">
-          <label for="symptoms">Describe Your Symptoms:</label>
-          <textarea id="symptoms" name="symptoms" required></textarea>
-        </div>
-
-        <!-- Submit Button -->
-        <button type="submit">Book Appointment</button>
-      </form>
+    <!-- Sidenav -->
+    <div class="sidenav bg-dark">
+      {% if user.is_authenticated %}
+      <a class="nav-link text-white fw-bold">Dashboard</a>
+      {% if not user.is_superuser %}
+      <a class="text-light" href="{% url 'profile' %}">Profile</a>
+      {% endif %}
+      <a class="text-light" href="{% url 'appointed' %}">Your Appointments</a>
+      {% endif %}
+      <a class="text-light" href="{% url 'appointments' %}">Appointments</a>
+      {% if user.is_superuser %}
+      <a class="text-light" href="{% url 'add-appointment' %}">Add Appointment</a>
+      {% endif %} {% if user.is_doctor %}
+      <a class="text-light" href="{% url 'clients' %}">Clients</a>
+      {% else %}
+      <a class="text-light" href="{% url 'doctors' %}">Doctors</a>
+      {% endif %}
     </div>
+
+    <!-- Main Content -->
+    <main role="main" class="container-fluid">
+      <div class="container">
+        <h2>Describe your problem</h2>
+
+        <form method="POST">
+          {% csrf_token %}
+          <!-- Symptoms -->
+          <div class="form-group">
+            <label for="symptoms">Describe Your Symptoms:</label>
+            <textarea id="symptoms" name="symptoms" required></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit">Search Doctor</button>
+        </form>
+      </div>
+    </main>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

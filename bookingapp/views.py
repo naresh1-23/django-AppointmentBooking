@@ -1,25 +1,51 @@
 from time import timezone
 from urllib import request
+from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from model.model_mapping import RuleBasedSymptomAlgorithm
 from user.models import UserModel
 from .models import Appointmentlist, AppointmentDetail, Patient, Patientform
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from datetime import datetime
 from django.utils import timezone
+from django.urls import reverse
+from urllib.parse import urlencode
 
 
 def home(request):
+    user = request.user
+    if not user.is_authenticated:
+        messages.info(request, "User not logged in.")
+        return redirect("login")
     return render(request, 'bookingapp/home.html')
 # Create your views here.
 
 
 def Doctors(request):
-    doctors = UserModel.objects.filter(is_doctor=True).values()
+    user = request.user
+    if not user.is_authenticated:
+        messages.info(request, "User not logged in.")
+        return redirect("login")
+    specialist = request.GET.get("specialist", None)
+    if specialist:
+        specialist = specialist.split(",")
+        query = Q()
+        for message in specialist:
+            query |= Q(specialist__iexact=message)
+        print(query)
+        doctors = UserModel.objects.filter(is_doctor=True).filter(query).values()
+    else:
+        doctors = UserModel.objects.filter(is_doctor=True).values()
     return render(request, 'bookingapp/doctor.html', {'doctors': doctors})
 
 
 def doctordetail(request, pk):
+    user = request.user
+    if not user.is_authenticated:
+        messages.info(request, "User not logged in.")
+        return redirect("login")
     doctor = UserModel.objects.filter(id=pk).first()
     return render(request, 'bookingapp/doctordetail.html', {'doctor': doctor})
 
@@ -28,6 +54,10 @@ def doctordetail(request, pk):
 
 @login_required
 def addappointment(request):
+    user = request.user
+    if not user.is_authenticated:
+        messages.info(request, "User not logged in.")
+        return redirect("login")
     if request.user.is_superuser:
         if request.method == 'POST':
             start_time = request.POST['start_time']
@@ -61,12 +91,20 @@ def addappointment(request):
 
 
 def appointmentall(request):
+    user = request.user
+    if not user.is_authenticated:
+        messages.info(request, "User not logged in.")
+        return redirect("login")
     appointments = AppointmentDetail.objects.all()
     return render(request, 'bookingapp/appointmentall.html', {'appointments': appointments})
 
 
 @login_required
 def book(request, pk):
+    user = request.user
+    if not user.is_authenticated:
+        messages.info(request, "User not logged in.")
+        return redirect("login")
     appointment = AppointmentDetail.objects.filter(id=pk).first()
     any = True
     if request.method == 'POST':
@@ -118,6 +156,10 @@ def get_seconds(time_str):
 
 
 def clients(request):
+    user = request.user
+    if not user.is_authenticated:
+        messages.info(request, "User not logged in.")
+        return redirect("login")
     if not request.user.is_doctor:
         messages.warning(request, f'cannot excess')
         return redirect('home')
@@ -129,6 +171,10 @@ def clients(request):
 
 
 def delete_appointment(request, pk):
+    user = request.user
+    if not user.is_authenticated:
+        messages.info(request, "User not logged in.")
+        return redirect("login")
     obj = AppointmentDetail.objects.filter(id=pk).first()
     obj.delete()
     messages.success(request, f'Successfully deleted')
@@ -136,6 +182,10 @@ def delete_appointment(request, pk):
 
 
 def update_list(request, pk):
+    user = request.user
+    if not user.is_authenticated:
+        messages.info(request, "User not logged in.")
+        return redirect("login")
     if request.user.is_superuser:
         obj = AppointmentDetail.objects.filter(id=pk).first()
         if request.method == 'POST':
@@ -169,11 +219,19 @@ def update_list(request, pk):
 
 
 def appointed(request):
+    user = request.user
+    if not user.is_authenticated:
+        messages.info(request, "User not logged in.")
+        return redirect("login")
     appointedlists = Appointmentlist.objects.filter(user_id=request.user)
     return render(request, 'bookingapp/appointed.html', {'appointedlists': appointedlists})
 
 
 def patient_detail_view(request):
+    user = request.user
+    if not user.is_authenticated:
+        messages.info(request, "User not logged in.")
+        return redirect("login")
     if request.method == 'POST':
         form = Patientform(request.POST)
         if form.is_valid():
@@ -187,6 +245,10 @@ def patient_detail_view(request):
 
 
 def patient_form(request, pk):
+    user = request.user
+    if not user.is_authenticated:
+        messages.info(request, "User not logged in.")
+        return redirect("login")
     appointobj = Appointmentlist.objects.filter(id=pk).first()
     if request.user.is_doctor:
         if request.method == 'POST':
@@ -208,3 +270,39 @@ def patient_form(request, pk):
         messages.warning(request, f'Access Denied')
         return redirect('home')
     return render(request, 'bookingapp/patientform.html', {'appointobj': appointobj})
+
+
+def book_appointment(request):
+    user = request.user
+    if not user.is_authenticated:
+        messages.info(request, "User not logged in.")
+        return redirect("login")
+    if request.method == "POST":
+        # Retrieve form data manually
+        symptoms = request.POST.get("symptoms")
+
+        # Simple validation checks
+        errors = []
+        if not symptoms:
+            errors.append("Please describe your symptoms.")
+
+        if errors:
+            for error in errors:
+                messages.error(request, error)
+        else:
+            specialist = RuleBasedSymptomAlgorithm(symptoms)
+            specialist_str = ','.join(specialist)
+
+            url = reverse('doctors')  # Replace 'doctors' with the actual name of your URL
+
+            # Prepare the query parameters
+            query_params = urlencode({'specialist': specialist_str})
+
+            # Construct the full URL with query parameters
+            final_url = f"{url}?{query_params}"
+
+            # Redirect to the correct URL
+            messages.success(request, "Recommended doctors.")
+            return HttpResponseRedirect(final_url)
+
+    return render(request, "bookingapp/form.html")
