@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from model.model_mapping import RuleBasedSymptomAlgorithm
 from user.models import UserModel
-from .models import Appointmentlist, AppointmentDetail, Patient, Patientform
+from .models import Appointmentlist, AppointmentDetail, Patient
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from datetime import datetime
@@ -35,7 +35,8 @@ def Doctors(request):
         for message in specialist:
             query |= Q(specialist__iexact=message)
         print(query)
-        doctors = UserModel.objects.filter(is_doctor=True).filter(query).values()
+        doctors = UserModel.objects.filter(
+            is_doctor=True).filter(query).values()
     else:
         doctors = UserModel.objects.filter(is_doctor=True).values()
     return render(request, 'bookingapp/doctor.html', {'doctors': doctors})
@@ -227,23 +228,6 @@ def appointed(request):
     return render(request, 'bookingapp/appointed.html', {'appointedlists': appointedlists})
 
 
-def patient_detail_view(request):
-    user = request.user
-    if not user.is_authenticated:
-        messages.info(request, "User not logged in.")
-        return redirect("login")
-    if request.method == 'POST':
-        form = Patientform(request.POST)
-        if form.is_valid():
-            form.save()
-            # Replace 'success' with your actual success page route
-            return redirect('success')
-    else:
-        form = Patientform()
-
-    return render(request, 'patient_detail_form.html', {'form': form})
-
-
 def patient_form(request, pk):
     user = request.user
     if not user.is_authenticated:
@@ -293,7 +277,8 @@ def book_appointment(request):
             specialist = RuleBasedSymptomAlgorithm(symptoms)
             specialist_str = ','.join(specialist)
 
-            url = reverse('doctors')  # Replace 'doctors' with the actual name of your URL
+            # Replace 'doctors' with the actual name of your URL
+            url = reverse('doctors')
 
             # Prepare the query parameters
             query_params = urlencode({'specialist': specialist_str})

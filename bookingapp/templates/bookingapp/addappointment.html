@@ -1,31 +1,53 @@
-{% extends 'user/include.html' %}
-{% load static %}
-{% include 'bookingapp/sidenav.html' %}
-{% block content %}
-<div class="container main" style="margin-top: 50px;">
-    <form method="post">
-        {% csrf_token %}
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">Start Time</span>
-            <input type="time" name="start_time" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-        </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">End Time</span>
-            <input type="time" name="end_time" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-        </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">Date</span>
-            <input type="date" name="date" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
-        </div>
-        <select name="doctorId" class="form-select" aria-label="Default select example">
-            {% for doctor in doctors %}
-            <option>{{ doctor.username }}</option>
-            {% endfor %}
-          </select><br>
-        <div class="submit_btn">
-            <button class="btn btn-primary submit" type="submit">Submit</button>
-        </div>
-
-    </form>
+{% extends 'user/include.html' %} {% load static %} {% include
+'bookingapp/sidenav.html' %} {% block content %}
+<div class="container main" style="margin-top: 50px">
+  <form method="post">
+    {% csrf_token %}
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Start Time</span>
+      <input
+        type="time"
+        name="start_time"
+        class="form-control"
+        placeholder="Username"
+        aria-label="Username"
+        aria-describedby="basic-addon1"
+      />
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">End Time</span>
+      <input
+        type="time"
+        name="end_time"
+        class="form-control"
+        placeholder="Username"
+        aria-label="Username"
+        aria-describedby="basic-addon1"
+      />
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Date</span>
+      <input
+        type="date"
+        name="date"
+        class="form-control"
+        placeholder="Email"
+        aria-label="Username"
+        aria-describedby="basic-addon1"
+      />
+    </div>
+    <select
+      name="doctorId"
+      class="form-select"
+      aria-label="Default select example"
+    >
+      {% for doctor in doctors %}
+      <option>{{ doctor.username }}</option>
+      {% endfor %}</select
+    ><br />
+    <div class="submit_btn">
+      <button class="btn btn-primary submit" type="submit">Submit</button>
+    </div>
+  </form>
 </div>
 {% endblock content %}

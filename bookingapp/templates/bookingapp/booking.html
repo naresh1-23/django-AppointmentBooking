@@ -1,25 +1,38 @@
-{% extends 'user/include.html' %}
-{% load static %}
-{% block content %}
-{% include 'bookingapp/sidenav.html' %}
-<div class="container main" style="margin-top: 50px;">
-    <form method="post">
-        {% csrf_token %}
-        <h1>Appointment with {{ appointment.doctor_id.username }}</h1>
-        <p>Specialist in {{ appointment.doctor_id.specialist }}</p>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">Select Time ({{appointment.start_time}} - {{appointment.end_time}})</span>
-            <input type="time" name="time" min="{{appointment.start_time}}" max="{{ appointment.end_time }}" class="form-control">
-        </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">Problem</span>
-            <input type="text" name="problem" class="form-control" placeholder="Enter problem" aria-label="Username" aria-describedby="basic-addon1">
-        </div>
-        <div class="submit_btn">
-            <button class="btn btn-primary submit" type="submit">Submit</button>
-        </div>
-
-    </form>
+{% extends 'user/include.html' %} {% load static %} {% block content %}
+{%include 'bookingapp/sidenav.html' %}
+<div class="container main" style="margin-top: 50px; margin-left: 200px">
+  <form method="post">
+    {% csrf_token %}
+    <h1>Appointment with {{ appointment.doctor_id.username }}</h1>
+    <p>Specialist in {{ appointment.doctor_id.specialist }}</p>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1"
+        >Select Time ({{appointment.start_time}} -
+        {{appointment.end_time}})</span
+      >
+      <input
+        type="time"
+        name="time"
+        min="{{appointment.start_time}}"
+        max="{{ appointment.end_time }}"
+        class="form-control"
+      />
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Problem</span>
+      <input
+        type="text"
+        name="problem"
+        class="form-control"
+        placeholder="Enter problem"
+        aria-label="Username"
+        aria-describedby="basic-addon1"
+      />
+    </div>
+    <div class="submit_btn">
+      <button class="btn btn-primary submit" type="submit">Submit</button>
+    </div>
+  </form>
 </div>
 
 {% endblock content %}
