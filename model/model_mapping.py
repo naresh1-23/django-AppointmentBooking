@@ -13,8 +13,7 @@ def RuleBasedSymptomAlgorithm(input_data):
             1 for word in input_keywords if word in comment)
 
         if matching_keywords > 0:
-            density_score = (matching_keywords / total_words) * \
-                100  # Normalize the score
+            density_score = ((matching_keywords / total_words) * row["Severity"])*100  # Normalize the score
             results.append({
                 "Specialist": row["Specialist"],
                 "Score": density_score,

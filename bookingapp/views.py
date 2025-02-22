@@ -33,6 +33,8 @@ def Doctors(request):
         specialist = specialist.split(",")
         query = Q()
         for message in specialist:
+            if message.isdigit():
+                continue
             query |= Q(specialist__iexact=message)
         print(query)
         doctors = UserModel.objects.filter(
