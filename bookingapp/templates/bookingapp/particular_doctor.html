@@ -1,0 +1,26 @@
+{% extends 'user/include.html' %}
+{% load static %}
+{% block content %}
+{% include 'bookingapp/sidenav.html' %}
+<div class="main">
+    <div class="container text-center">
+        <div class="row row-cols-1 row-cols-lg-1 g-1 g-lg-1">
+            {% for appointment in appointments %}
+          <div class="col">
+            <div class="p-3 border bg-light">
+                <p><h1>{{ appointment.doctor_id.username }}</h1></p>
+                <p>Specialist: {{appointment.doctor_id.specialist}}</p>
+                <p>Time: {{ appointment.start_time }} - {{ appointment.end_time }}</p>
+                <p>Date: {{ appointment.date }}</p>
+                <a href="{% url  'booking' appointment.id %}"><button class="btn btn-primary">Book appointment</button></a><br>
+                {% if user.is_superuser %}
+                <a href="{% url  'delete' appointment.id %}"><button style="width:25%;" class="btn btn-danger">Delete</button></a>
+                <a href="{% url  'update_form' appointment.id %}"><button style="width:25%;"  class="btn btn-warning">Edit</button></a>
+                {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+</div>
+{% endblock content %}

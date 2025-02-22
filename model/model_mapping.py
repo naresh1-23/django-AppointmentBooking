@@ -101,14 +101,13 @@ dataset = pd.read_csv("data/high_density_dataset.csv")
 density_results = calculate_density_and_keyword_matching(
     "i am experiencing high cholesterol level are very high for few hours.it seems to worsen after exercising.", dataset)
 
-# Check if results exist, otherwise print a message
-if density_results:
-    # Display the top 5 distinct specialists
-    for result in density_results[:5]:
-        print(f"Input Symptoms: {result['Input Symptoms']}, "
-              f"Specialist: {result['Specialist']}, "
-              f"Matching Keywords: {result['Matching Keywords']}, "
-              f"Total Keywords: {result['Total Keywords']}, "
-              f"Density Score: {result['Density Score (%)']:.2f}%")
-else:
-    print("No specialists found meeting the criteria. Consider lowering the density threshold or adjusting input keywords.")
+# if density_results:
+# Display the top 5 distinct specialists
+#     for result in density_results[:5]:
+#         print(f"Input Symptoms: {result['Input Symptoms']}, "
+#               f"Specialist: {result['Specialist']}, "
+#               f"Matching Keywords: {result['Matching Keywords']}, "
+#               f"Total Keywords: {result['Total Keywords']}, "
+#               f"Density Score: {result['Density Score (%)']:.2f}%")
+# else:
+#     print("No specialists found meeting the criteria. Consider lowering the density threshold or adjusting input keywords.")

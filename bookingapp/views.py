@@ -28,8 +28,8 @@ def Doctors(request):
     if not user.is_authenticated:
         messages.info(request, "User not logged in.")
         return redirect("login")
-    specialist = request.GET.get("specialist", None)
-    if specialist:
+    specialist = request.GET.get("specialist")
+    if specialist == "" or specialist:
         specialist = specialist.split(",")
         query = Q()
         for message in specialist:
@@ -291,3 +291,12 @@ def book_appointment(request):
             return HttpResponseRedirect(final_url)
 
     return render(request, "bookingapp/form.html")
+
+
+def particular_doctor_appointment(request, doctor_id):
+    user = request.user
+    if not user.is_authenticated:
+        messages.info(request, "User not logged in.")
+        return redirect("login")
+    appointments = AppointmentDetail.objects.filter(doctor_id=doctor_id)
+    return render(request, 'bookingapp/particular_doctor.html', {'appointments': appointments})
