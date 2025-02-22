@@ -1,38 +1,57 @@
 import pandas as pd
+from nltk.corpus import stopwords
+import nltk
+
+nltk.download('stopwords')
 
 
 def RuleBasedSymptomAlgorithm(input_data):
     dataset = pd.read_csv("data/balanced_train_dataset.csv")
-    input_keywords = [word.strip().lower() for word in input_data.split()]
+
+    # Define stopwords
+    stop_words = set(stopwords.words("english"))
+
+    # Process input keywords (remove stopwords)
+    input_keywords = [
+        word.strip().lower()
+        for word in input_data.split()
+        if word.strip().lower() not in stop_words
+    ]
+
     results = []
 
     for index, row in dataset.iterrows():
         comment = row["Comment"].lower()
         total_words = len(comment.split())
-        matching_keywords = sum(
-            1 for word in input_keywords if word in comment)
 
-        if matching_keywords > 0:
-            density_score = ((matching_keywords / total_words) * row["Severity"])*100  # Normalize the score
+        matching_keywords = sum(1 for word in input_keywords if word in comment)
+
+        if matching_keywords > 0 and total_words > 0:
+            density_score = ((matching_keywords / total_words) * row["Severity"]) * 100  # Normalize the score
             results.append({
                 "Specialist": row["Specialist"],
                 "Score": density_score,
                 "Comment": row["Comment"]
             })
 
+    # Sort by score in descending order
     results = sorted(results, key=lambda x: -x["Score"])
+
+    # Get distinct specialists
     distinct_results = []
-    seen_specialists = []
+    seen_specialists = set()
 
     for result in results:
         if result["Specialist"] not in seen_specialists:
             distinct_results.append(result)
-            seen_specialists.append(result["Specialist"])
+            seen_specialists.add(result["Specialist"])
         if len(distinct_results) >= 3:
             break
+
+    # Print results
     for result in distinct_results:
-        print(
-            f"Specialist: {result['Specialist']}, Score: {result['Score']:.2f}, Condition: {result['Comment']}")
+        print(f"Specialist: {result['Specialist']}, Score: {result['Score']:.2f}, Condition: {result['Comment']}")
+
     return seen_specialists
 
 
